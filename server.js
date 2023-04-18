@@ -1,4 +1,4 @@
-import { config } from "dotenv";
+
 import app from "./app.js";
 import { connectDB } from "./config/database.js";
 import cloudinary from "cloudinary";
@@ -15,10 +15,14 @@ cloudinary.v2.config({
     api_key:process.env.CLOUDINARY_CLIENT_API,
     api_secret:process.env.CLOUDINARY_CLIENT_SECRET
 })
-export const instance = new Razorpay({
-     key_id: process.env.RAZORPAY_API_KEY,
- key_secret: process.env.RAZORPAY_API_SECRET })
 
+export const instance = new Razorpay({
+     key_id:process.env.RAZORPAY_API_KEY,
+ key_secret:process.env.RAZORPAY_API_SECRET
+ });
+ 
+ 
+ 
  nodeCron.schedule("0 0 0 1  * *",async ()=>{
     try{
         await Stats.create({});
