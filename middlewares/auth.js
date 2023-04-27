@@ -6,6 +6,7 @@ import { AsyncError } from "./AsyncError.js"
 
 export const isAuthenticated=AsyncError(async(req,res,next)=>{
     const {token}=req.cookies;
+    console.log(token); 
 
     if(!token)
       return next(new ErrorHandler("User not logged in",401))

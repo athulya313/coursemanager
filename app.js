@@ -10,6 +10,7 @@ import cors from "cors";
 
 
 
+
 config({
     path:"./config/config.env"
 })
@@ -19,28 +20,43 @@ config({
 
 const app=express();
 
+
+
 app.use(express.json());
 app.use(express.urlencoded({
     extended:true,
 }))
 
-app.use(cookieParser());
+app.set("trust proxy",1)
+ 
+
 app.use(cors({
-    origin:process.env.FRONTEND_URL,
-    credentials:true,
-    methods:["GET","POST","PUT","DELETE"]
+  origin:"*",
+  credentials: true,
+  methods:["GET","POST","PUT","DELETE"],
+  
+  
 }))
+
+
+
+
+app.use(cookieParser());
+
 
 app.use("/api/v1", course);
 app.use("/api/v1",user);
 app.use("/api/v1",payment)
 app.use("/api/v1",other);
 
-app.get("/",(req,res) =>{
-    res.send(`<h1> site is working click here</h1>`)
-})
+
 
 
 export default app;
+app.get("/", (req, res) =>    
+  res.send(
+    `<h1>Site is Working. click <a href=${process.env.FRONTEND_URL}>here</a> to visit frontend.</h1>`
+  )
+);
 
 app.use(ErrorMiddleware);
